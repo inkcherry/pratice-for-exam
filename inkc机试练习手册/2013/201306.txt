@@ -1,0 +1,47 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+const int ma = 99999999;
+using namespace std;
+
+int main()
+{
+
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201306.txt");
+	ofstream outfile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201306out.txt");
+	char a[100];
+	char b[100];
+	infile >> a >> b;
+	int len1 = strlen(a);
+	int len2 = strlen(b);
+	int flag = 0;
+	int endindex = 0;
+	int temp;
+	for (int i = 0; i < len1; i++)
+	{
+		temp = i;
+		for (int j = 0; j < len2; j++)
+		{
+			if (b[j]!= a[i++])   //这里别忘记了是一起跑的
+				break;
+			if (j == len2-1)
+			{
+				endindex = i;
+				flag = 1;
+			}
+		}
+		if (flag == 1)
+			break;
+		i = temp;
+	}
+	if(flag==1)
+	cout << "起始位置是" << endindex - len2 +1<< "终止位置是"<<endindex << endl;
+	else cout << "没有哦" << endl;
+	return 0;
+	
+}

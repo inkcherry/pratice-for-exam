@@ -1,0 +1,29 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+using namespace std;
+int main()
+{
+	double a[1000];
+	double sum=0;
+	double sum2=0;
+	double m;
+	int n;
+	cin >> m >> n;   //n是数量 m是钱
+	for (int i = 0; i < n; i++)
+	{
+		a[i] = rand()*1000;
+		sum += a[i];
+	}
+	for (int i = 0; i < n-1; i++)
+	{
+		double p = (a[i]/sum)*m ;
+		double l = (int(p * 100)) / 100.00;
+		cout << l<<" ";
+		sum2 += l;
+	}
+	cout << m - sum2;
+	return 0;
+}

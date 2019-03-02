@@ -1,0 +1,97 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+#include<queue>
+#include<memory>
+#include<memory.h>
+using namespace std;
+//求图的最大联通分量
+int a[100][100];
+
+int visit[100];
+int cnt[100];  //统计连通分量的个数
+int belong[100];  //顶点属于哪个连通分量
+
+int n, m;
+
+void dfs(int v,int time)
+{
+	if (!visit[v])
+	{
+		cnt[time]++;
+		belong[v] = time;
+		visit[v] = 1;
+		for (int i = 1; i <=n; i++)  //剪枝
+		{
+			if (!visit[i]&&a[i][v])
+			{
+				dfs(i, time);
+			}
+
+		}
+	}
+	 return;
+
+
+}
+int main()
+{
+	memset(cnt, 0, sizeof(int) * 100);   /// memset必须要放在函数内部
+
+	memset(visit, 0, sizeof(int) * 100);
+	memset(belong, 0, sizeof(int) * 100);
+
+	ifstream   infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\200606.txt");
+
+
+
+	infile >> n >> m;   //顶点个数 边个数
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+			a[i][j] = 0;
+	}
+
+
+	int a1, a2;
+	for (int i = 1; i <= m; i++)  //有是这样 注意没有零界点的处理
+	{
+		infile >> a1 >> a2;
+		a[a1][a2] = 1;
+		a[a2][a1] = 1;   //这个地方好麻烦 怎么剪枝
+	}
+
+	for (int i = 1; i <= n; i++)
+	{
+		dfs(i, i);
+	}
+	int ma = 0;
+	int index = 0;
+
+
+
+	for (int i = 1; i <=n; i++)
+	{
+		if (ma < cnt[i])
+		{
+			ma = cnt[i];
+			index = i;
+		}
+		
+	}
+
+
+	for (int i = 1; i <= n; i++)
+	{
+		if (belong[i] == index)
+			cout << i;
+	}
+	return 0;
+    
+}

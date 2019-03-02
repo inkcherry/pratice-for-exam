@@ -1,0 +1,31 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+
+using namespace std;
+int main()
+{
+	int m, n;
+	cin >> m >> n;
+	int t;
+	t = m & n;
+	/*cout << t;*/
+	stack<int> s;
+	while (t)
+	{
+		s.push( t % 2);
+		t = t / 2;
+	}
+	while (!s.empty())
+	{
+		cout << s.top();
+		s.pop();
+	}
+	return 0;
+ }

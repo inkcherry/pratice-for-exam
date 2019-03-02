@@ -1,0 +1,36 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+//C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201201.txt
+using namespace std;
+
+int main()
+{
+	int x, y, z;
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201102.txt");
+	infile >> x >> y >> z;
+	int count = 0;
+	for(int i=0;i<=4;i++)//取4个等于取8个
+		for(int j=0;j<=4-i;j++)
+		{
+			int k = 4 - i - j;
+				if (x >= i && y >= j && z > k)
+				{
+					cout << "第" << ++count << "种：";
+					cout << "红球" << x - i<<" ";
+					cout << "黄球" << y - j<<" ";
+					cout << "黑球" << z - k << " " << endl;
+				
+				}
+		}
+
+	return 0;
+}
+
+ 

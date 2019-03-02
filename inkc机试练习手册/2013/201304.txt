@@ -1,0 +1,50 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+const int ma = 99999999;
+using namespace std;
+
+bool  is_z(int &n)
+{
+	for (int i = 2; i <= sqrt(n); i++)   //2 3 是质数  这个地方怎么感觉有点巧呢  嘤嘤嘤
+	{
+		if (n%i == 0)
+			return false;
+	}
+	return true;
+}
+
+int main()
+{
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201304.txt");
+	ofstream outfile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201304out.txt");
+
+	int num;
+	while (!infile.eof())
+	{
+		infile >> num;
+		int flag = 0;
+		for (int i = 2; i <= num/2; i++)
+		{
+			int temp = num - i;
+			if (is_z(i) && is_z(temp))   //右值什么的都往干净了？
+			{
+				outfile << i << "+" << temp<<endl;
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 0)
+			outfile<< "拆不开" << endl;
+
+
+	}
+
+	return 0;
+}
+

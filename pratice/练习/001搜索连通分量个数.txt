@@ -1,0 +1,79 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+#include<queue>
+#include<memory>
+#include<memory.h>
+using namespace std;
+//求图的最大联通分量
+int visit[100][100];
+char a[100][100];
+int cnt;
+
+
+void dfs(int m, int n)   
+{     
+
+	if (!visit[m][n]&&a[m][n]=='@')  //加两个剪枝
+	{
+		
+		for (int i =  max(m - 1,0); i <= m + 1 ; i++)   //这里感觉处理有问题 从1开始就好了
+		{
+		
+			for (int j = max(n - 1,0); j <= n + 1 ; j++)
+			{
+				
+				if (!visit[i][j] && a[i][j] == '@')
+				{
+					visit[m][n] = 1; 
+					//注意这里visit一定要放在dfs之前
+					dfs(i, j);
+
+				}
+			}
+		}
+	}
+	return;
+}
+
+
+int main()
+{
+
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\001.txt");
+	int m, n;
+	
+	while (infile>>m>>n)
+	{
+		cnt = 0;
+		memset(visit, 0, sizeof(visit));        //注意memset别写成sizeof(visit)
+		memset(a, '#', sizeof(a));
+		if (m == 0 && n == 0)
+			break;
+		for (int i = 0; i < m; i++)
+			for (int j = 0; j < n; j++)
+				infile>> a[i][j];
+
+		for(int i=0;i<n;i++)
+			for (int j = 0; j< n; j++)
+			{
+				if (!visit[i][j]&&a[i][j]=='@')
+				{
+					dfs(i, j);
+					cnt++;
+				}
+			}
+
+		cout << cnt<<endl;
+
+
+
+	}
+	return 0;
+}

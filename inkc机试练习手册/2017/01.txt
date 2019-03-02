@@ -1,0 +1,24 @@
+#include "pch.h"
+#include<iostream>
+#include<fstream>
+#include<algorithm>
+#include <string>
+using namespace std;
+int main()
+{
+	ifstream	infile("C:\\Users\\inkcherry\\Desktop\\ts2.txt");
+	char m[1000];
+	
+	while (infile >> m)
+	{
+		if (m[0] >= 'a'&&m[0] <= 'z')
+		{
+			m[0] += 'A'-'a';
+		}
+		cout << m<< " ";
+	}
+	
+
+
+	return 0;
+}

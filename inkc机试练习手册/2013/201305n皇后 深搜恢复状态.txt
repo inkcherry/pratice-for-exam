@@ -1,0 +1,54 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+const int ma = 99999999;
+using namespace std;
+
+
+int length, cur_num;
+int m[100];
+using namespace std;
+int sum = 0;
+
+bool  can_assign(int q)
+{
+	for (int i = 0; i < q; i++)
+	{
+		if (m[i] == m[q] || (abs(m[i] - m[q]) == abs(q - i)))
+			return false;
+	}
+	return true;
+}
+void put(int n)
+{
+	
+	for (int i = 0; i < length; i++)
+	{
+		m[n] = i;
+		if (can_assign(n))
+		{
+			if (n == length - 1)
+				sum++;
+
+			else put(n + 1);
+		}
+	
+	}
+}
+
+
+int main()
+{
+
+	while (cin >> length)
+	{
+		put(0);
+		cout << sum;
+		sum = 0;
+	}
+}

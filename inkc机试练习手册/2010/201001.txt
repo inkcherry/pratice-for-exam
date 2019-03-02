@@ -1,0 +1,97 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+//C:\\Users\\inkcherry\\Desktop\\inkcª˙ ‘¡∑œ∞ ÷≤·\\testfile\\201102.txt
+
+
+using namespace std;
+
+int main()
+{
+	char c[10000];
+
+
+
+
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkcª˙ ‘¡∑œ∞ ÷≤·\\testfile\\201001.txt");
+     
+
+	if (!infile.is_open())
+	{
+		cout << "Error opening file"; exit(1);
+
+	}
+	
+	
+	
+	int index = 0;
+	while(!infile.eof())
+	{
+		infile.get(c[index++]);
+	}
+
+	int t = 0;
+	while(t != index)
+	{
+	
+
+
+
+
+		if (c[t + 1] == '!')
+		{
+		
+			c[t] = '\0';
+			c[t + 1] = '\0';
+		}
+
+		if (c[t + 1] == '*')
+		{
+			int w=t;
+			while(w>= 0 && c[w] != '\n')
+			{
+				c[w] = '\0';
+				w--;
+			}
+			c[t + 1] = '\0';
+		}
+
+
+		if (c[t + 1] == '>')
+		{
+			c[t + 1] = '\0';
+			int m = t;
+			while (c[m] != ' ')
+			{
+				m--;
+			}
+			c[m + 1] += ('A' - 'a');
+			
+		}
+		t++;
+	}
+
+
+
+
+	for (int i = 0; i < index; i++)
+	{
+		while(c[i] >= '0'&&c[i] <= '9')
+			i++;
+		if (c[i] != '\0')
+			cout << c[i];
+		else i++;
+	}
+	return 0;
+
+
+
+}
+
+ 

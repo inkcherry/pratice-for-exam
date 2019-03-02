@@ -1,0 +1,159 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+
+const int ma = 99999999;
+using namespace std;
+double todouble(char *a,int &len)
+{
+	double result = 0;
+	double result2 = 0;
+	double result3 = 0;
+	int flag1=1;//Êý·û
+	int flag2=1;//½×·ûºÅ
+	if (a[0] == '-')
+	{
+		flag1 = -1;
+		
+	}
+	else {
+		result = result * 10 + (a[0] - '0');
+	}
+	
+	int index1=len-1;
+	int index2 = len;
+	for (int i = 1; i < len; i++)
+	{
+		if (a[i] != '.'&&a[i]!='e')
+		{
+			result = result * 10 + (a[i] - '0');
+			
+	    }
+		else {
+			index1 = i;
+			break;
+		}
+    }
+	if (a[index1] == '.')
+	{
+		for (int i = index1 + 1; i < len; i++)
+		{
+			if (a[i] != 'e')
+			{
+				result2 = result2 * 10 + (a[i] - '0');
+			}
+			else{
+				index2 = i;
+				break;
+			}
+		}
+		
+	}
+	
+	if (a[index2] == 'e')
+	{
+		if (a[index2 + 1] == '-')
+		{
+			flag2 = -1;
+		}
+		else {result3 = result3 * 10 + a[index2+1] - '0';}
+
+			for (int i = index2 + 2; i < len; i++)
+		{
+			result3 = result3 * 10 + a[i] - '0';
+		}
+			
+	}
+	double endresult = 0;
+	double dd = result2 * pow(10, -1 * (index2 - index1-1));
+	endresult = flag1 * (result+dd)*pow(10,result3*flag2);
+	return endresult;
+}
+void tostring(double m)
+{
+	bool haved = 0;
+	bool havee = 0;
+	int e = 0;
+	double d=0;
+	int duoyuxiao=0;
+
+
+	int zheng = floor(m);
+	double xiao = m - floor(m);
+	
+	while (zheng > 10)
+	{
+		havee = 1;
+		haved = 1;
+		e++;
+		
+		duoyuxiao = (zheng % 10)*pow(10, e-1) +duoyuxiao;
+		zheng = zheng / 10;
+	}
+	if (xiao!=0)
+	{
+		haved = 1;
+	}
+	//while (xiao!=ceil(xiao))
+	//{
+	//	xiao *= 10;
+	//}
+
+	
+
+
+	long int t = xiao * 100000000;
+	while(t % 10 == 0)
+		t /= 10; 
+
+
+	cout << zheng;
+	if (haved)
+	{
+		cout << ".";
+		if (duoyuxiao!=0)
+		{
+			cout << duoyuxiao;
+		}
+		if (t != 0)
+		{
+			cout << t;
+		}
+	}
+	if (havee)
+	{
+		cout << "e";
+		cout << e;
+	}
+	
+
+}
+int main()
+{
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc»úÊÔÁ·Ï°ÊÖ²á\\testfile\\201201.txt");
+	char a[100];
+	char b[100];
+	infile>>a;
+	infile >> b;
+	int len1;
+	int len2;
+	len1 = strlen(a);
+	len2 = strlen(b);
+	/*cout << todouble(a,len1)<<endl;
+	cout << todouble(b,len2)<<endl;*/
+
+	double a1 = todouble(a, len1);
+	double a2 = todouble(b, len2);
+	double a3 = a1 + a2;
+	tostring(a3);
+
+    
+	
+	return 0;
+}

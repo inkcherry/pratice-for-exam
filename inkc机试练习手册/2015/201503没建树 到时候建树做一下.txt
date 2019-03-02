@@ -1,0 +1,71 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+using namespace std;
+int a[30];  //用来存放节点和层数
+
+int main()
+{
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201503.txt.");
+	ofstream outfile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201503out.txt.");//疑问 输出的时候会建立文件夹吗  会的
+	int a[30] = { 0 };  //用来存放节点和层数
+	
+	char cur;
+	char head;
+	int flag = 1;//新的一行的标志
+	int nodecount = 1;
+	infile.get(cur);
+	a[cur - 'A'] = 1;  //
+	head = cur;
+	while (!infile.eof())
+	{
+		infile.get(cur);
+		if (cur == ' ')
+		{
+			flag = 0;
+		 	continue;
+		}
+	
+		else if (cur == '\n')
+		{
+			flag = 1;//到了新的一行
+			continue;
+		}
+				  //队头数据
+		else if (flag == 1)
+		{
+			head = cur;
+			flag = 0;
+		}
+		//普通数据
+		else {
+			a[cur - 'A'] = a[head - 'A'] + 1;  //当前节点是第一个节点层数+1
+			flag = 0;
+			nodecount++;
+		}
+	}
+	int flag2 = 0;
+	for (int i = 1; i < nodecount; i+=2)
+	{
+		flag2 = 1;
+		for (int j = 0; j < nodecount; j++)
+		{
+			if (a[j] == i)
+			{
+				if (flag2 == 1)
+				{
+					outfile << "第 " << i << "层节点" << (char)(j + 'A') << " ";
+					flag2 = 0;
+				}
+				else
+				   outfile << (char)(j + 'A') << " ";
+			}
+		}
+		outfile<< endl;
+	}
+	return 0;
+}
+

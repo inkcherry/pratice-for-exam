@@ -1,0 +1,55 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+const int ma = 99999999;
+using namespace std;
+
+int main()
+{
+	stack<int> st;
+	int sum = 0;
+	int cur = 0;;
+	int max=0;
+	int min = ma;
+	string a[100]; //用来存放正整数的和
+
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\20131234.txt");
+	int count = 0;
+	while (!infile.eof())
+	{
+		infile >> cur;
+		sum += cur;
+		if (min > cur)
+		{
+			min = cur;
+	   }
+		int t = cur;
+		while (cur  != 0)   //这个地方是不等于0  不是cur/2不等于0
+		{
+			st.push(cur % 2);
+			cur = cur / 2;
+		}
+	
+		
+		int m = 0;
+		while(!st.empty())
+		{
+			 m = st.top();
+			 cout <<  m ;
+			st.pop();
+		}
+		cout << endl;
+		
+
+
+	}
+	cout << "以上所有数字的和是" <<sum<< endl;
+	cout << "以上所有数字的最小的是" <<min<<endl;
+	return 0;
+}
+

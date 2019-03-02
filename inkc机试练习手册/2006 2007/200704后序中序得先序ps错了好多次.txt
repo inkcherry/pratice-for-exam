@@ -1,0 +1,105 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+#include<queue>
+struct node
+{
+	node(node *a, node *b, char c) {
+		lc = a;
+		rc = b;
+		data = c;
+	}
+	node *lc;
+	node *rc;
+	char data;
+};
+using namespace std;
+
+char a[100];  //zhong
+char b[100];  //hou
+node* gett(int a1, int a2, int b1, int b2)
+{
+
+	if (a1 == 6&&a2==7)
+	{
+		int a = 0;
+	}
+
+	// 8 7  6  5的时候错了 回去调对 我透
+	char temp = b[b2];
+	if (a1 != a2)
+	{
+	
+
+		int len = 0;
+		int indexa = 0;
+		for (int i = a1; i <= a2; i++)
+		{
+			if (a[i] == temp)
+			{		
+				len = i - a1;   //左子树长度+1  这里一开始忘了-a1我去  
+			    indexa = i;
+			}  //这里怎么错得这么厉害 我去，一个当长度一个当坐标  一开始只用了一个都迷糊了 0.0
+
+		}
+		
+		node *m = new node(nullptr, nullptr, temp);
+		if (indexa - 1 >= a1)
+		m->lc = gett(a1, indexa - 1, b1 , b1+len-1);   //这个地方拿纸和笔画画  别弄错了  用套数法
+		else m -> lc = nullptr;
+
+		if (indexa + 1 <= a2)                    //这里注意加上判断啊我去
+		m->rc = gett(indexa + 1, a2, b1+len, b2-1);
+		else m->rc = nullptr;
+
+
+		return m;
+	}
+	else if (a2 == a2)
+	{
+		node *si = new node(nullptr, nullptr, temp);
+		return si;
+	}
+
+}
+void bl(node*T)
+{
+	if (T)
+	{
+		cout << T->data << " ";
+		bl(T ->lc);
+		bl(T->rc);
+	}
+}
+int main()
+{
+
+	ifstream   infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\200704.txt");
+	infile >> a;
+	infile >> b;
+	int len = strlen(a);
+
+
+
+	node *root=gett(0, len-1, 0, len-1);
+	bl(root);
+
+
+	return 0;
+    
+}
+
+	
+	
+	
+
+
+
+
+ 

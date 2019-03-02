@@ -1,0 +1,100 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+#include<queue>
+//C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201102.txt
+//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+  //用09年的格式建树做一次层次遍历
+//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+
+using namespace std;
+
+struct node {
+	node(node *a, node *b, char bb)
+	{
+		lc = a;
+		rc = b;
+		data = bb;
+	}
+	node *lc;
+	node *rc;
+	char data;
+};
+ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\200903.txt");
+void gett(node *T)
+{
+	
+	
+	if (T->data != 'O')
+	{
+		char r;
+		infile >> r;
+		node *m = new node(nullptr, nullptr, r);
+		T->lc = m;
+
+		gett(T->lc);                  //这里得次序注意一下  ！！！！！！！！
+
+		infile >> r;
+
+		m = new node(nullptr, nullptr, r);
+		T->rc = m;
+		gett(T->rc);
+
+	}
+}
+
+void bl(node *T);
+int main()
+{
+
+
+	
+   //文件没有问题得话  读完一个树应该正好停止
+	char c;
+	infile >> c;
+	node *root = new node(nullptr, nullptr, c);
+	gett(root);
+	
+
+	bl(root);
+	return 0;
+
+}
+void bl(node* T)
+{
+	queue<node*>q;
+	q.push(T);
+	while(!q.empty())
+	{
+		node *mm = q.front();
+		q.pop();
+		cout << mm->data << " ";
+		if (mm->lc)
+			q.push(mm->lc);
+		if (mm->rc)
+			q.push(mm->rc);
+	}
+}
+
+	
+	
+	
+
+
+
+
+ 

@@ -1,0 +1,30 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+using namespace std;
+
+
+int main()
+{
+	int count =1;
+	const char *a="abcdefghij";
+	for(int i=0;i<10;i++)
+		for(int j=0;j<i;j++)
+			for(int k=0;k<j;k++)
+				for(int l=0;l<k;l++)
+					for (int m = 0; m<l; m++)
+					{
+						
+					
+					
+							cout << "第" << count++ << "种组合是" << a[i] << a[j] << a[k] << a[l] << a[m] << endl;
+					
+
+							
+				 			
+					}
+	return 0;
+}
+

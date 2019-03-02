@@ -1,0 +1,103 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+//C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201102.txt
+
+
+using namespace std;
+
+struct node {
+	node(node *a, node *b, int bb)
+	{
+		lc = a;
+		rc = b;
+		data = bb;
+	}
+	node *lc;
+	node *rc;
+	int data;
+};
+void bl(node *T)
+{
+	if (T)
+	{
+		bl(T->lc);
+		bl(T->rc);
+
+		cout << T->data << " ";
+	}
+}
+int main()
+{
+
+
+
+
+
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201003.txt");
+
+	node *root;
+	int m;
+	infile >> m;
+	root = new node(nullptr, nullptr, m);
+
+	node *pre,*t;
+	pre = nullptr;
+	t = nullptr;
+	int flag = 0;
+	while(!infile.eof())
+	{
+		pre = root;
+		t = root;
+	    
+	
+
+
+		infile >> m;
+		if (m > root->data)
+		{
+			flag = 0;
+		}
+		else flag = 1;
+
+		while (t!=nullptr)
+		{
+			if (m > t->data)
+			{
+				pre = t;
+				t = t->lc;  //左边是大的
+				flag = 0;
+			}
+			else if (m < t->data)
+			{
+				pre = t;
+				t = t->rc;
+				flag = 1;
+			}
+		}
+		node *newnode = new node(nullptr, nullptr, m);
+		if (flag == 0)               //这个判断树得地方不要弄错 大哥  要跟上面一直
+ 		{
+			pre->lc = newnode;
+		}
+		else
+		{
+			pre->rc = newnode;
+		}
+	}
+	bl(root);
+
+	
+	return 0;
+	
+
+
+}
+
+ 

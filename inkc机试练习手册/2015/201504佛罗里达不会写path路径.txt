@@ -1,0 +1,63 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+const int ma = 99999999;
+using namespace std;
+
+int main()
+{
+	
+	int d[30][30] = { };
+	int path[30][30] = { 0 };
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201504.txt");
+
+	
+	int n;
+	infile >>n;
+	int v1, v2, w;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			d[i][j] = ma;
+			path[i][j] = j;   //玛德不看答案path都不会写
+		}
+	}
+	while (!infile.eof())
+	{
+		infile >> v1 >> v2 >> w;
+		d[v1][v2] = w;
+		d[v2][v1] = w;
+		//直接拿二维做
+	}
+
+
+	for(int i=0;i<n;i++)   //佛罗利达
+		for(int j=0;j<n;j++)
+			for (int k = 0; k < n; k++)
+			{
+
+				if (d[i][j] > (d[i][k] + d[k][j]))
+				{
+					d[i][j] = d[i][k] + d[k][j];
+					path[i][j] = path[i][k];
+				}
+			//	d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+			}
+	cout << "输入最短路径";
+
+	cin >> v1 >> v2;
+	cout << "最短路径长度是" << d[v1][v2];
+	cout << "最短路径是" << endl;
+	while (v1 != v2)                 //注意最终打印这里的处理   啊啊啊啊啊我透
+	{
+		cout << v1<<" ";
+		v1 = path[v1][v2];
+	}
+	cout << v2;
+	return 0;
+}
+

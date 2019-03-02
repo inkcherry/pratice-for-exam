@@ -1,0 +1,85 @@
+// ConsoleApplication1.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+//
+
+#include "pch.h"
+#include <iostream>
+#include<string>
+using namespace std;
+int main()
+{   
+	string m;
+
+	string namepool[100] = { "" };
+	int minpool[100] = { 0 };//用于存放相应选手的记录数值
+	int count = 0;
+
+	int n;
+
+	cin >> n;
+
+	cin.get();
+
+
+	for (int i = 0; i < n; i++) 
+	{
+		
+		getline(cin, m);
+
+
+
+
+
+		string   name = m.substr(0, 9);
+		string  st_hour = m.substr(10, 2);
+		string  st_min = m.substr(13,2);
+		string  en_hour = m.substr(16,2);
+		string  en_min = m.substr(19,2);
+		//cout << name<<" "<<st_hour << " " << st_min << " " << en_hour << " " << en_min;
+		int sh = atoi(st_hour.c_str());
+		int sm = atoi(st_min.c_str());
+		int eh = atoi(en_hour.c_str());
+		int em  = atoi(en_min.c_str());
+
+		int alltime = 0;
+		//跨天判断
+		if (sh> eh || (eh == sh&& sm > em))
+		{
+			alltime = 24*60-((sh-eh)*60+(sm-em));
+		}
+		else
+		{
+			alltime = (eh - sh) * 60 + (em - sm);
+
+		}
+
+
+		for (int i = 0; i <= count; i++)  //count用于记录当前有多人
+		{
+			if (!(namepool[i].compare(name)))//已经查询到一样的
+			{minpool[i] += alltime;
+			break;
+			}
+			 if (i == count)
+			{   
+				 count++;
+				 namepool[i] = name;
+				 minpool[i] = alltime;
+				 break;
+			}
+
+		}
+
+
+	}
+	int max = 0;
+	int index = 0;
+	for (int i = 0; i < count; i++)
+	{
+		if (max < minpool[i]);
+		{max = minpool[i];
+		index = i;
+		}
+    }
+	cout << "最牛逼的学生"<<namepool[index]<<""<<"时间"<<minpool[index];
+	return 0;
+}

@@ -1,0 +1,89 @@
+4#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+//C:\\Users\\inkcherry\\Desktop\\inkc»úÊÔÁ·Ï°ÊÖ²á\\testfile\\201201.txt
+using namespace std;
+struct node {
+	node(node *nlc, node *nrc, int ndata)
+	{
+		lc = nlc;
+		rc = nrc;
+		data = ndata;
+	}
+	node *lc;
+	node *rc;
+	int data;
+};
+node* nodearr[100];
+
+
+
+void bl(node *T)
+{
+	if (T)
+	{
+		bl(T->lc);
+		bl(T->rc);
+		cout << T->data<<" ";
+	}
+}
+int main()
+{
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc»úÊÔÁ·Ï°ÊÖ²á\\testfile\\201104.txt");
+	node *root = nullptr;;
+	int a1, a2, a3;
+	int n;
+	infile >> n;
+	for (int i = 1; i <=n; i++)
+	{
+		nodearr[i] = nullptr;
+	}
+	for (int i = 0; i < n; i++)
+	{   
+		infile >> a1 >> a2 >> a3;
+
+		if (a2!=0&&nodearr[a2] == nullptr)
+		{
+			node *m = new node(nullptr, nullptr, a2);
+			nodearr[a2] = m;
+		}
+
+		if (a3!=0&&nodearr[a3] == nullptr)
+		{
+			node *m = new node(nullptr, nullptr, a3);
+			nodearr[a3] = m;
+		}
+
+		if (nodearr[a1] == nullptr)
+		{
+			node *m = new node(nodearr[a2], nodearr[a3], a1);
+			nodearr[a1] = m;
+			if (i == 0)
+			{
+				root = m;
+			}
+		}
+		else {
+			nodearr[a1]->lc = nodearr[a2];
+			nodearr[a1]->rc = nodearr[a3];
+		}
+	
+	
+	}
+
+	bl(root);
+
+	
+
+	return 0;
+ }
+1 2    4
+2  0  3
+3 0 0
+4 0 0

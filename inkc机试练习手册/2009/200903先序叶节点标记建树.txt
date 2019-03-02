@@ -1,0 +1,89 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+//C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\201102.txt
+
+
+using namespace std;
+
+struct node {
+	node(node *a, node *b, char bb)
+	{
+		lc = a;
+		rc = b;
+		data = bb;
+	}
+	node *lc;
+	node *rc;
+	char data;
+};
+ifstream infile("C:\\Users\\inkcherry\\Desktop\\inkc机试练习手册\\testfile\\200903.txt");
+void gett(node *T)
+{
+	
+	
+	if (T->data != 'O')
+	{
+		char r;
+		infile >> r;
+		node *m = new node(nullptr, nullptr, r);
+		T->lc = m;
+
+		gett(T->lc);                  //这里得次序注意一下  ！！！！！！！！
+
+		infile >> r;
+
+		m = new node(nullptr, nullptr, r);
+		T->rc = m;
+		gett(T->rc);
+
+	}
+}
+int getdeep(node *T)
+{
+	if (T == nullptr)
+	{
+		return 0;
+	}
+	else return max(getdeep(T->lc), getdeep(T->rc)) + 1;
+}
+
+void print(int l,node *T,int curl)
+{
+
+	if (T)
+	{
+		if (curl <= l)
+			cout << T->data;
+
+		if (curl <l) {
+			print(l, T->lc, curl + 1);
+			print(l, T->rc, curl + 1);
+		}
+	}
+}
+int main()
+{
+
+	char m;
+	
+   //文件没有问题得话  读完一个树应该正好停止
+	char c;
+	infile >> c;
+	node *root = new node(nullptr, nullptr, c);
+	gett(root);
+	int depth = getdeep(root);
+
+	int l = depth / 2;
+	/*cout << depth;*/
+
+	print(l, root, 1);
+	return 0;
+
+}
