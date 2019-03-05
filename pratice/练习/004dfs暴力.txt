@@ -1,0 +1,65 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+#include<queue>
+#include<memory>
+#include<memory.h>
+using namespace std;
+//	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\001.txt");
+
+
+
+int a[100];
+int visit[1000];
+int cnt;
+int n;
+void dfs(int k)
+{
+	if (k== n + 1)
+	{
+		cnt++;
+		for (int i = 1; i <= n; i++)
+		{
+			/*cout <<"case"<<cnt<<" :"<< a[i] << " ";*/
+		}
+	/*	cout << endl;*/
+		return;
+	}
+	for (int i = 1; i <= n; i++)
+		{
+			if (!visit[i] &&k!= i)
+			{
+				
+				visit[i] = 1;
+				a[k] = i;
+				dfs(k+1);
+				visit[i] = 0;
+			}
+		}
+	
+	return;
+	
+}
+int main()
+{
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\004.txt");
+
+	while (!infile.eof())
+	{
+		infile >> n;
+		cnt = 0;
+		memset(a, 0, sizeof(a));
+		memset(visit, 0, sizeof(visit));
+		dfs(1);
+		cout << cnt << endl;
+	}
+	return 0;
+
+}
+

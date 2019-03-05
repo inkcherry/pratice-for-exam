@@ -1,0 +1,45 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+#include<queue>
+#include<memory>
+#include<memory.h>
+using namespace std;
+//	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\001.txt");
+
+
+//排错公式  动态规划 想不到用dfs暴力
+int dp[100];
+
+int cnt;
+int n;
+//排错公式
+int main()
+{
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\004.txt");
+
+	while (!infile.eof())
+	{
+		infile >> n;
+		cnt = 0;
+
+		memset(dp, 0, sizeof(dp));
+		dp[1] = 0;
+		dp[2] = 1;
+		for (int i = 3; i <= n; i++)
+		{
+			dp[i] = (i - 1)*(dp[i - 1] + dp[i - 2]);
+		}
+		cout << dp[n] << endl;
+	
+	}
+	return 0;
+
+}
+

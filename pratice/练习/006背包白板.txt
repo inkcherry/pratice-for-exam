@@ -1,0 +1,49 @@
+#include "pch.h"
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<math.h>
+#include <string>
+#include<vector>
+#include <stack>
+#include<list>
+#include<queue>
+#include<memory>
+#include<memory.h>
+using namespace std;
+//	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\001.txt");
+
+//
+int a[1000];
+int b[1000];
+int dp[100][100];   //数量 重量
+int n;
+int main()
+{
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\006.txt");
+	int m, n;
+	infile >> m >> n;
+	memset(dp, 0, sizeof(dp));
+	for (int i = 1; i <=n; i++)
+	{
+		infile >> a[i];   //重量
+		infile >> b[i];  //价值
+	}
+
+	for (int i = 1; i <=n; i++)      //数量
+	{
+		for (int j =1; j <=m; j++)//重量
+		{
+			if (j < a[i])
+				dp[i][j] = dp[i - 1][j];
+			else {
+				dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - a[i]] + b[i]);
+			}
+		}
+	}
+
+
+	cout << dp[n][m];
+	return 0;
+
+}
