@@ -1,0 +1,185 @@
+#include<iostream>
+#include<fstream>
+#include<string.h>
+#include<string>
+#include<vector>
+#include<memory.h>
+#include<stack>
+#include<cctype>
+#include<map>
+
+//中缀表达式转后缀表达式
+//
+//
+// 思路：中缀表达式转后缀表达式
+//1.数字 直接输出
+//2.（  进栈
+//3.） 把栈内元素挨个出栈并输出直到遇见  （
+//4.运算符  和栈内元素比较 比栈顶优先级大>就直接进栈 否则<=将栈顶出栈输出 再比较
+//
+//
+//中缀转前缀
+//1.将中缀倒置
+//2.数字直接输出
+//3.） 直接进栈
+//4. （ 把栈内元素挨个出栈并输出直到遇见  ）
+//5.运算符 和栈内元素比较 >= 栈顶优先级就直接进栈  否则将栈顶出栈 再比较
+//6最后的输出顺序是逆序  需要倒过来 
+
+//-----------------------------------------------------------------------
+//中缀转后缀
+using namespace std;
+map<char, int>m;
+//  + -   是0
+// *  /是1
+
+int main()
+{   
+	m.insert(make_pair('+', 0));
+	m.insert(make_pair('-', 0));
+	m.insert(make_pair('*', 1));
+	m.insert(make_pair('/', 1));
+	m.insert(make_pair('(',-99));
+	
+
+
+	char a[100];
+
+	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\009.txt");
+	infile >> a;
+	int len = strlen(a);
+
+
+	stack<char>op;
+
+
+
+	for (int i = 0; i < len; i++)
+	{
+		if (i == 9)
+			int a = 1;
+		if (isalpha(a[i]))
+		{
+			cout << a[i];
+		}
+		else {
+			//符号
+			if (a[i] == '(')
+				op.push('(');
+			else if (a[i] == ')')
+			{
+				while (op.top()!= '(')
+				{
+					cout<<op.top();
+					op.pop();
+				}
+				op.pop();//输出（
+			}
+			else {  //普通运算符
+
+				/*if(m.find(a[i]).!=1)*/
+				if (!op.empty())
+				{
+					auto  newit = m.find(a[i]);
+
+					char cc = op.top();
+					auto  stit = m.find(op.top());
+
+					while ((newit->second) <= (stit->second))   //优先级小于等于
+					{
+						cout << op.top();
+						op.pop();
+						if (op.empty())
+							break;
+						  newit = m.find(a[i]);
+						  stit = m.find(op.top());
+					}
+				}
+					op.push(a[i]);	
+			}
+		}
+	}
+	while (!op.empty())
+	{
+		cout << op.top();
+		op.pop();
+
+   }
+
+
+	return 0;
+}
+
+//---------------------------------------------------------------------------
+//中缀转前缀
+//using namespace std;
+//
+//
+//
+//int main()
+//{
+//	int m[1000];
+//	m['+'] = 0;
+//	m['-'] = 0;
+//	m['*'] = 1;
+//	m['/'] = 1;
+//	m[')'] = -99;
+//	char a[100];
+//	char print[100];
+//	int index = 0;
+//	stack<char>op;
+//	ifstream infile("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\009.txt");
+//	infile >> a;
+//	int len = strlen(a);
+//	for (int i = len - 1; i >= 0; i--)
+//	{
+//
+//		if (isalpha(a[i]))
+//			print[index++] = a[i];
+//		else {
+//			if (a[i] == ')')
+//				op.push(')');
+//			else if (a[i] == '(')
+//			{
+//				while (op.top() != ')')
+//				{
+//					print[index++] = op.top();
+//					
+//					op.pop();
+//				}
+//				op.pop();
+//
+//			}
+//			else
+//			{
+//				if (!op.empty())
+//				{
+//					char c = op.top();
+//					while (m[a[i]] < m[c])
+//					{
+//						print[index++] = op.top();
+//						
+//						op.pop();
+//						if (op.empty())
+//							break;
+//						c = op.top();
+//					}
+//
+//				}
+//				op.push(a[i]);
+//			}
+//
+//		}
+//
+//	}
+//	while (!op.empty())
+//	{
+//		print[index++] = op.top();
+//		op.pop();
+//	}
+//	for (int i = index - 1; i >= 0; i--)
+//	{
+//		cout << print[i];
+//	}
+//}
+
