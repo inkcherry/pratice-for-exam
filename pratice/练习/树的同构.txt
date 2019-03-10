@@ -1,0 +1,140 @@
+//ifstream cin("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\030.txt");
+
+#include<iostream>
+#include<vector>
+#include<set>
+#include<fstream>
+#include<memory.h>
+using namespace std;
+struct node {
+	node(node *l, node *r, char  d)
+	{
+		lc = l;
+		rc = r;
+		data = d;
+	}
+	char data;
+	node *lc;
+	node *rc;
+};
+node * np[100] = { nullptr };
+bool node_ok(node *T1, node *T2)
+{
+	
+	if (T1 == nullptr&&T2 != nullptr || T1 != nullptr&&T2 == nullptr)   //一空 一非空
+		return false;
+	if ((T1 == nullptr&&T2 == nullptr) || T1->data == T2->data)   //相等
+	{
+		return true;
+	}
+	return false;   //不相等
+}
+bool dfs(node *T1, node *T2)
+{
+
+	
+	if (T1 == nullptr)  //T2肯定也是null了
+	{
+		return true;
+	}
+	if (node_ok(T1->lc, T2->lc)&&node_ok(T1->rc,T2->rc))
+	{
+		return dfs(T1->lc, T2->lc) && dfs(T1 ->rc, T2->rc);
+	}
+	if (node_ok(T1->lc, T2->rc) && node_ok(T1->lc, T2->rc))
+	{
+		return dfs(T1->lc, T2->rc) && dfs(T1->lc, T2->rc);
+	}
+	else return 0;
+	
+}
+
+int main()
+{
+	//ifstream cin("C:\\Users\\inkcherry\\Desktop\\pratice\\input\\031.txt");
+	int n;
+	bool flag = 1;
+	char a[100];
+	char b[100], c[100];
+	int find[100];
+	node *root1=nullptr;
+	node *root2=nullptr;
+	int T = 2;
+	while (T)
+	{
+		cin >> n;
+		for (int i = 0; i < n; i++)
+		{
+			node *m = new node(nullptr, nullptr, c[i]);
+			np[i] = m;
+
+		}
+		for (int i = 0; i < n; i++)
+		{
+			cin >> a[i] >> b[i] >> c[i];
+			np[i]->data = a[i];
+			if(b[i]!='-')
+			np[i]->lc = np[b[i]-'0'];
+
+
+			if(c[i]!='-')
+			np[i]->rc = np[c[i]-'0'];
+		}
+		memset(find, 0, sizeof(find));
+
+	
+			for (int i = 0; i < n; i++)
+			{
+				if (b[i] != '-')
+				{
+					int cc = b[i] - '0';
+					find[cc] = -1;
+				}
+				if (c[i] != '-')
+				{
+					int cc = c[i] - '0';   //b  这里写成b[i]-'0'
+					find[cc] = -1;
+				}
+			}
+
+		
+
+
+		int rootindex;
+		for (int i = 0; i < n; i++)
+		{
+			if (find[i] == 0)
+			{
+				rootindex = i;
+				if (T == 2)
+				{		root1 = np[i];
+			    }
+				else { 
+					root2 = np[i]; break;
+				     }
+				break;
+			}
+			
+		}
+		T--;
+
+	}
+	if (node_ok(root1,root2))
+	{
+		flag=dfs(root1, root2);
+
+	}
+	else 
+	{
+		flag = 0;
+	}
+	if (flag == 0)
+	{
+		cout << "No";
+	}
+	else {
+		cout << "Yes";
+	}
+	return 0;
+
+}

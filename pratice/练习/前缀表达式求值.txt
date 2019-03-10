@@ -1,0 +1,67 @@
+// 1.txt.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+//
+
+
+#include <iostream>
+#include<stack>
+#include<string>
+#include<vector>
+#include<cctype>
+using namespace std;
+vector<string>m;
+stack<double>s;
+int main()
+{
+	string temp;
+
+	while (cin >> temp)
+	{
+		if (!temp.compare("wocao"))
+		{break; }
+		m.push_back(temp);
+	}
+	
+	for (int i = m.size()-1; i >= 0; i--)
+	{
+		if (!m[i].compare("+"))
+		{
+			double a = s.top();
+			s.pop();
+			double b= s.top();
+			s.pop();
+			s.push(a + b);
+		}
+		else if (!m[i].compare("-"))
+		{
+			double a = s.top();
+			s.pop();
+			double b = s.top();
+			s.pop();
+			s.push(a - b);
+
+		}
+		else if (!m[i].compare("*"))
+		{
+			double a = s.top();
+			s.pop();
+			double b = s.top();
+			s.pop();
+			s.push(a * b);
+		}
+		else if (!m[i].compare("/"))
+		{
+			double a = s.top();
+			s.pop();
+			double b = s.top();
+			s.pop();
+			s.push(a / b);
+		}
+		else {
+			s.push(atof(m[i].c_str()));
+		}
+	}
+	cout << s.top();
+	return 0;
+}
+
+

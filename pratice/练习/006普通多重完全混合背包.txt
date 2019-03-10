@@ -1,0 +1,170 @@
+// 1.txt.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+//
+
+
+#include <iostream>
+#include<stack>
+#include<string>
+#include<vector>
+#include<cctype>
+#include<algorithm>
+#include<memory.h>
+using namespace std;
+//完全背包--------------------物品种类可以选取多个
+
+
+//int  a[300];
+//int b[300];
+//double dp[300][300];
+////完全背包问题 
+//int main()
+//{
+//	int n,m;
+//	cin >> m>>n;
+//	for (int i = 1; i <= n; i++)
+//		cin >> a[i] >> b[i];
+//
+//	memset(dp, 0, sizeof(dp));
+//	for(int i=1;i<=n;i++)
+//		for (int j = 0; j <= m; j++)
+//		{
+//			dp[i][j] = dp[i - 1][j];
+//			if(j-a[i]>=0)
+//			dp[i][j] = max(dp[i][j - a[i]] + b[i], dp[i ][j]);  //这里的处理 和 只能选一个的不一样
+//	    }
+//
+//	cout <<"max="<<dp[n][m];
+//	return 0;
+//}
+
+//
+////---------物品种类只能选取一个  普通背包
+//#include<iostream>
+//#include<memory.h>
+//#include<algorithm>
+//using namespace std;
+//int main()
+//{
+//	int dp[500][500];
+//	int w[500];
+//	int v[500];
+//	int m, n;
+//	cin >> m >> n;  //zhongliang  shuliang
+//	for (int i = 1; i <= n; i++)
+//		cin >> w[i] >> v[i];
+//
+//	memset(dp, 0, sizeof(dp));
+//	for (int i = 1; i <= n; i++)
+//		for (int j = 1; j <= m; j++)   //这里必须是1  
+//		{
+//			dp[i][j] = dp[i - 1][j];  //这里先赋值 再判断
+//			if (j - w[i] >= 0)
+//				dp[i][j] = max(dp[i][j], dp[i - 1][j - w[i]] + v[i]);   
+//
+//		}
+//	cout << dp[n][m];
+//}
+
+
+
+//多重背包 物品种类数量确定
+const int maxn = 1e5 + 5;
+int a[maxn];
+int b[maxn];
+int c[maxn];
+int dp[6000][6005];
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	int p = n;
+	for (int i = 1; i <=p; i++)
+	{
+		cin >> a[i] >> b[i] >> c[i];
+		int temp = c[i];
+		while (--temp)
+		{
+			i++;
+			a[i] = a[i - 1];
+			b[i] = b[i - 1];
+			p++;
+		
+		}
+	}
+
+	memset(dp, 0, sizeof(dp));
+
+	for (int i = 1; i <= p; i++)
+	{
+		for (int j = 0; j <= m; j++)
+		{
+			dp[i][j] = dp[i - 1][j];
+		
+			if (j - a[i] >= 0)
+			{
+				dp[i][j] = max(dp[i - 1][j - a[i]] + b[i], dp[i-1][j]);
+			}
+		
+		}
+	}
+	cout << dp[p][m];
+	return 0;
+}
+
+
+//混合背包问题  物品可能是有限的 也可能是无限的
+
+//const int maxn = 1e5 + 5;
+//int a[maxn];
+//int b[maxn];
+//int c[maxn];
+//int dp[1000][1005];
+//
+//int main()
+//{
+//	int n, m;
+//	cin >> m >> n;
+//	int p = n;
+//	for (int i = 1; i <=p; i++)
+//	{
+//		cin >> a[i] >> b[i] >> c[i];
+//		int temp = c[i];
+//		if (c[i] == 0)
+//		{
+//			c[i] == -1;
+//			continue;
+//		}
+//		else while (--temp)
+//		{
+//			i++;
+//			a[i] = a[i - 1];
+//			b[i] = b[i - 1];
+//			c[i] = c[i - 1];
+//			p++;
+//		
+//		}
+//	}
+//
+//	memset(dp, 0, sizeof(dp));
+//
+//	for (int i = 1; i <= p; i++)
+//	{
+//		for (int j = 0; j <= m; j++)
+//		{
+//			dp[i][j] = dp[i - 1][j];
+//		
+//			if (j - a[i] >= 0)
+//			{
+//				if(c[i]==0)  //无限个
+//				dp[i][j] = max(dp[i][j - a[i]] + b[i], dp[i-1][j]);
+//				else {
+//					dp[i][j] = max(dp[i - 1][j - a[i]] + b[i], dp[i - 1][j]);
+//				}
+//			}
+//		
+//		}
+//	}
+//	cout << dp[p][m];
+//	return 0;
+//}
